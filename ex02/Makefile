@@ -1,5 +1,5 @@
 CC		:= c++
-CFLAGS	:= -Wall -Wextra -Werror
+CXXFLAGS	:= -Wall -Wextra -Werror
 COPTS	:= -std=c++98 -pedantic
 
 NAME	:= a.out
@@ -9,10 +9,10 @@ OBJS	:= $(SRCS:%.cpp=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(CFLAGS) $(COPTS) $(OBJS)
+	$(CC) -o $(NAME) $(CXXFLAGS) $(COPTS) $(OBJS)
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) $(COPTS) -o $@ -c $^
+	$(CC) $(CXXFLAGS) $(COPTS) -o $@ -c $^
 
 clean:
 	rm -rf $(OBJS)
