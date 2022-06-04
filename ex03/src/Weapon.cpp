@@ -2,14 +2,14 @@
 
 Weapon::Weapon(std::string type) : type_(type) {}
 
-Weapon::Weapon(void) {}
+Weapon::Weapon(void) : type_("") {}
 
 Weapon::~Weapon(void) {}
 
-const std::string& Weapon::getType(void) {
-  return type_;
+const std::string& Weapon::getType(void) const {
+    return type_;
 }
 
 void Weapon::setType(std::string type) {
-  type_ = type;
+    type_ = type;
 }

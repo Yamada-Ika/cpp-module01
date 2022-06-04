@@ -1,13 +1,29 @@
 #include "Zombie.hpp"
 
-Zombie* zombieHorde( int N, std::string name );
+Zombie* zombieHorde(int N, std::string name);
+
+void normal(void) {
+    Zombie *zombies;
+
+    zombies = zombieHorde(5, "hoge");
+    for (int i = 0; i < 5; i++) {
+        zombies[i].announce();
+    }
+    delete [] zombies;
+}
+
+void badAllocate(void) {
+    Zombie *zombies;
+
+    zombies = zombieHorde(-1, "hoge");
+    // zombies = zombieHorde(2147483647, "hoge");
+    for (int i = 0; i < 5; i++) {
+        zombies[i].announce();
+    }
+    delete [] zombies;
+}
 
 int main(void) {
-  Zombie *zombies;
-
-  zombies = zombieHorde(5, "zombies");
-  for (int i = 0; i < 5; i++) {
-    zombies[i].announce();
-  }
-  delete [] zombies;
+    normal();
+    badAllocate();
 }

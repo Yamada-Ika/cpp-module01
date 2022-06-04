@@ -1,12 +1,11 @@
-CC		:= c++
+CC			:= c++
 CXXFLAGS	:= -Wall -Wextra -Werror
-COPTS	:= -std=c++98 -pedantic
-INCLUDE	:= -I src
+COPTS		:= -std=c++98 -pedantic-errors
+INCLUDE		:= -I src
 
 NAME	:= zombie
-SRCS	:= \
-Zombie.cpp      newZombie.cpp\
-main.cpp        randomChump.cpp
+SRCS	:= Zombie.cpp      newZombie.cpp\
+			main.cpp        randomChump.cpp
 OBJS	:= $(SRCS:%.cpp=%.o)
 SRCS	:= $(addprefix src/, $(SRCS))
 OBJS	:= $(addprefix obj/, $(OBJS))
@@ -27,4 +26,12 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+run: all
+	./zombie
+
+leak:
+	@echo '#include <stdio.h>\n#include <unistd.h>\n#include <stdlib.h>\n#include <strings.h>\n__attribute__((destructor))\nvoid	destructor(void){char buf[50]; bzero(buf, 50); sprintf(buf, "leaks %d", getpid()); system(buf);}' > src/leak.cpp
+	-c++ -o leak src/*.cpp && ./leak
+	rm -rf ./leak src/leak.cpp
+
+.PHONY: all clean fclean re run leak
