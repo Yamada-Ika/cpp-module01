@@ -25,7 +25,6 @@ fclean: clean
 
 re: fclean all
 
-# run: SHELL := /bin/bash
 run: all
 	@echo "\033[036m-------- DEBUG --------\033[0m"
 	./harlFilter "DEBUG"

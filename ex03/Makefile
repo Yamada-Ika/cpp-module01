@@ -28,4 +28,4 @@ re: fclean all
 run: all
 	./a.out
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run

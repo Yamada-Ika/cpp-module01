@@ -64,4 +64,4 @@ error: all
 	@rm -rf test.file
 	@rm -rf dir
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run error
