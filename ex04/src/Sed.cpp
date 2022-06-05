@@ -16,15 +16,6 @@ static bool hasErrorOccured(const std::string &path) {
     return ifs.rdstate() != 0;
 }
 
-static std::ifstream openFile(const std::string &path) {
-    if (hasErrorOccured(path)) {
-        std::cerr << "Error: Failed to open file" << std::endl;
-        std::exit(1);
-    }
-    std::ifstream ifs(path);
-    return ifs;
-}
-
 static void write(const std::string &path, const std::string &content) {
     std::ofstream ofs(path);
     if (ofs) {
@@ -37,7 +28,11 @@ static void write(const std::string &path, const std::string &content) {
 }
 
 void Sed::readFileContent(void) {
-    std::ifstream ifs = openFile(filepath_);
+    if (hasErrorOccured(filepath_)) {
+        std::cerr << "Error: Failed to open file" << std::endl;
+        std::exit(1);
+    }
+    std::ifstream ifs(filepath_);
     std::stringstream ss;
     ss << ifs.rdbuf();
     content_ = ss.str();
