@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 Sed::Sed(const std::string &filepath, const std::string &s1, const std::string &s2) {
     filepath_ = filepath;
@@ -9,12 +10,18 @@ Sed::Sed(const std::string &filepath, const std::string &s1, const std::string &
     s2_ = s2;
 }
 
-static std::ifstream open(const std::string &path) {
-    std::ifstream ifs(path);
-    if (ifs.fail()) {
+static bool hasErrorOccured(const std::string &path) {
+    std::fstream ifs(path);
+
+    return ifs.rdstate() != 0;
+}
+
+static std::ifstream openFile(const std::string &path) {
+    if (hasErrorOccured(path)) {
         std::cerr << "Error: Failed to open file" << std::endl;
         std::exit(1);
     }
+    std::ifstream ifs(path);
     return ifs;
 }
 
@@ -29,17 +36,27 @@ static void write(const std::string &path, const std::string &content) {
     }
 }
 
-void Sed::replace(void) {
-    std::ifstream ifs = open(filepath_);
-    std::string readline = "", replaced = "";
+void Sed::readFileContent(void) {
+    std::ifstream ifs = openFile(filepath_);
+    std::stringstream ss;
+    ss << ifs.rdbuf();
+    content_ = ss.str();
+}
 
-    while (std::getline(ifs, readline)) {
-        size_t pos, idx = 0;
-        while ((pos = readline.find(s1_, idx)) != std::string::npos) {
-            replaced += readline.substr(idx, s1_.size()) + s2_;
-            idx = pos + s1_.size();
-        }
+void Sed::replace(void) {
+    if (s1_.empty()) {
+        std::cerr << "Error: first string may not be empty" << std::endl;
+        std::exit(1);
     }
 
-    write(filepath_ + ".replace", replaced + "\n");
+    readFileContent();
+
+    size_t pos, idx = 0;
+    while ((pos = content_.find(s1_, idx)) != std::string::npos) {
+        content_.erase(pos, s1_.size());
+        content_.insert(pos, s2_);
+        idx = pos + s2_.size();
+    }
+
+    write(filepath_ + ".replace", content_);
 }
