@@ -2,7 +2,7 @@
 
 Zombie::Zombie(std::string name) : name_(name) {}
 
-Zombie::Zombie() {}
+Zombie::Zombie() : name_("") {}
 
 Zombie::~Zombie() {
     std::cout << name_ + ": deleted" << std::endl;

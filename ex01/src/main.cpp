@@ -16,7 +16,6 @@ void badAllocate(void) {
     Zombie *zombies;
 
     zombies = zombieHorde(-1, "hoge");
-    // zombies = zombieHorde(2147483647, "hoge");
     for (int i = 0; i < 5; i++) {
         zombies[i].announce();
     }

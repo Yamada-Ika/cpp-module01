@@ -1,6 +1,6 @@
 CC			:= c++
 CXXFLAGS	:= -Wall -Wextra -Werror
-COPTS		:= -std=c++98 -pedantic
+COPTS		:= -std=c++98 -pedantic-errors
 
 NAME	:= a.out
 SRCS	:= main.cpp

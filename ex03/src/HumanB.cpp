@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-HumanB::HumanB(std::string name) : name_(name) {
-    weapon_ = NULL;
-}
+HumanB::HumanB(std::string name) : name_(name), weapon_(NULL) {}
 
 HumanB::~HumanB(void) {}
 

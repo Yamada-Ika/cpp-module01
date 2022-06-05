@@ -56,6 +56,7 @@ error: all
 	-./sed noright.file hoge fuga
 	@mkdir -p dir
 	-./sed dir hoge fuga
+	-./sed nosuchfile hoge fuga
 	-./sed
 	-./sed dir
 	-./sed dir 'a'
